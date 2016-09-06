@@ -51,8 +51,6 @@ public final class QueryUtils {
 
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
-            //JSONArray arr = new JSONArray(SAMPLE_JSON_RESPONSE);
-            //System.out.println( arr.length() );
             JSONObject object = new JSONObject(SAMPLE_JSON_RESPONSE);
             JSONArray quakes = object.getJSONArray("features");
 
@@ -63,9 +61,9 @@ public final class QueryUtils {
                 long timeseconds = properties.getLong("time");
                 Double mag = properties.getDouble("mag");
                 String place = properties.getString("place");
+                String url = properties.getString("url");
 
-                EarthQuake quake = new EarthQuake(place, mag, timeseconds);
-
+                EarthQuake quake = new EarthQuake(place, mag, timeseconds, url);
                 earthquakes.add(quake);
             }
 

@@ -12,7 +12,8 @@ public class EarthQuake {
     private String time;
     private String kmOffset;
     private String city;
-    private String magnitude;
+    private String url;
+    private Double magnitude;
 
     private DecimalFormat formatter = new DecimalFormat("0.0");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM DD, yyyy");
@@ -21,10 +22,11 @@ public class EarthQuake {
     /*
      * Constructor
      */
-    public EarthQuake( String city, Double magnitude, Long unixtime ) {
+    public EarthQuake( String city, Double magnitude, Long unixtime, String url ) {
         setCity(city);
         setMagnitude(magnitude);
         setDate(unixtime);
+        setUrl(url);
     }
 
     /*
@@ -74,10 +76,25 @@ public class EarthQuake {
      * set and get for Magnitude
      */
     public void setMagnitude(Double magnitude) {
-        this.magnitude =  formatter.format(magnitude);
+        this.magnitude =  magnitude;
     }
 
-    public String getMagnitude() {
-        return this.magnitude;
+    public String getMagnitudeStr() {
+        return formatter.format(magnitude);
+    }
+
+    public Double getMagnitude() {
+        return magnitude;
+    }
+
+    /*
+     * set and get for URL
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return this.url;
     }
 }

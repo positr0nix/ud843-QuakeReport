@@ -32,13 +32,17 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
 
         EarthQuake currentQuake = getItem(position);
 
-        TextView quake_magn = (TextView) listItemView.findViewById(R.id.quake_magn);
-        TextView quake_city = (TextView) listItemView.findViewById(R.id.quake_city);
-        TextView quake_date = (TextView) listItemView.findViewById(R.id.quake_date);
+        TextView quakeMagn = (TextView) listItemView.findViewById(R.id.quake_magn);
+        TextView quakeCity = (TextView) listItemView.findViewById(R.id.quake_city);
+        TextView quakeDate = (TextView) listItemView.findViewById(R.id.quake_date);
+        TextView quakeOffset = (TextView) listItemView.findViewById(R.id.offset_city);
+        TextView quakeTime = (TextView) listItemView.findViewById(R.id.quake_time);
 
-        quake_city.setText( currentQuake.getCity() );
-        quake_magn.setText( currentQuake.getMagnitude()+"" );
-        quake_date.setText( currentQuake.getDate() );
+        quakeCity.setText( currentQuake.getCity() );
+        quakeMagn.setText( currentQuake.getMagnitude() );
+        quakeDate.setText( currentQuake.getDate() );
+        quakeOffset.setText( currentQuake.getKmOffset() );
+        quakeTime.setText( currentQuake.getTime() );
 
         return listItemView;
     }

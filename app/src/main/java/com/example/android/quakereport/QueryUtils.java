@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,6 +86,36 @@ public final class QueryUtils {
             }
         }
         return output.toString();
+    }
+
+    public static String makeConnection(URL url) {
+        HttpURLConnection urlConnection = null;
+        InputStream inputStream = null;
+        String jsonResponse = "";
+
+        try{
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(10000 /* milliseconds */);
+            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            if (urlConnection.getResponseCode() == 200) {
+                inputStream = urlConnection.getInputStream();
+                jsonResponse = QueryUtils.readFromStream(inputStream);
+            } else {
+                Log.e("makeConnection", "Error response code: " + urlConnection.getResponseCode());
+            }
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }catch(IOException e){
+            Log.e("makeConnection", "Problem retrieving the earthquake JSON results.", e);
+        }
+        return jsonResponse;
     }
 
 }

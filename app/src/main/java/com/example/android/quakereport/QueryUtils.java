@@ -6,6 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +44,7 @@ public final class QueryUtils {
      * Return a list of {@link EarthQuake} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<EarthQuake> extractEarthquakes() {
+    public static ArrayList<EarthQuake> extractEarthquakes(String jsonData) {
 
         // Create an empty ArrayList that we can start adding earthquakes to
         ArrayList<EarthQuake> earthquakes = new ArrayList<>();
@@ -51,7 +56,7 @@ public final class QueryUtils {
 
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
-            JSONObject object = new JSONObject(SAMPLE_JSON_RESPONSE);
+            JSONObject object = new JSONObject(jsonData);
             JSONArray quakes = object.getJSONArray("features");
 
 
@@ -78,8 +83,18 @@ public final class QueryUtils {
         return earthquakes;
     }
 
-    public static void main(String[] args) {
-        extractEarthquakes();
+    public static String readFromStream(InputStream inputStream) throws IOException {
+        StringBuilder output = new StringBuilder();
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                output.append(line);
+                line = reader.readLine();
+            }
+        }
+        return output.toString();
     }
 
 }

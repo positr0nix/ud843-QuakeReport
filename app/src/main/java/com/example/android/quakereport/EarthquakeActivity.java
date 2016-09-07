@@ -42,7 +42,7 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     private ListView rootView;
 
-    private String url = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=3&limit=30";
+    private String url = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=1&limit=50";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +111,11 @@ public class EarthquakeActivity extends AppCompatActivity {
 
             if (result == null || result.isEmpty() )
                 return;
+
+            updateUI(result);
+        }
+
+        private void updateUI(final ArrayList<EarthQuake> result) {
             EarthQuakeAdapter adapter = new EarthQuakeAdapter(EarthquakeActivity.this, result);
 
             rootView = (ListView) findViewById(R.id.list);
